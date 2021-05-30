@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -57,6 +58,21 @@ public class StockValueService {
         }
 		
 		return jsonObj;
+	}
+	
+	public void collectData() {
+		
+		JsonObject jsonObj = callStockValue();
+		JsonObject symbolObj = null;
+		
+		if( !ObjectUtils.isEmpty(jsonObj) ) {
+			String[] symbols = symbolParam.toUpperCase().split(",");
+			for(String sym : symbols) {
+				symbolObj = gson.fromJson(jsonObj.get(sym), JsonObject.class);
+				log.info("{}: {}", sym, gson.toJson(symbolObj.get("chart")));
+			}
+		}
+		
 	}
 
 }

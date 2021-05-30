@@ -20,7 +20,7 @@ public class StockValueRestController {
 	
 	@GetMapping(value = "/v1/start")
 	public String start() {
-		service.callStockValue();
+		service.collectData();
 		return "Collecting";
 	}
 	
