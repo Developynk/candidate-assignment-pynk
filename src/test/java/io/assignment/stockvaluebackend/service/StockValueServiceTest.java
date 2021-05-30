@@ -1,5 +1,6 @@
 package io.assignment.stockvaluebackend.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
@@ -24,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RunWith(SpringRunner.class)
+@SpringJUnitConfig(StockValueService.class)
 @SpringBootTest(classes = {
 		StockValueBackendApplication.class,
 		H2JpaConfig.class})
@@ -32,6 +35,8 @@ public class StockValueServiceTest {
 	
 	@Autowired(required=true) 
 	private StockValueRepository stockRepo;
+	
+	@Autowired private StockValueService service;
 	
 	@Test
 	public void callStockValueSuccess() {
@@ -59,5 +64,13 @@ public class StockValueServiceTest {
 		assertNotNull(stockList);
 		
 	}
+	
+	@Test
+    public void givenSleepBy2000ms_whenGetCount_thenIsGreaterThanZero() 
+      throws InterruptedException {
+        Thread.sleep(10000L);
+
+        assertThat(service.getCount()).isGreaterThan(0);
+    }
 
 }
