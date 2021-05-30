@@ -94,12 +94,12 @@ public class StockValueService {
 	}
 	
 	@Scheduled(fixedDelay = 10000)
-	public void run() {
-//		if(this.switchOnOff) {
+	private void run() {
+		if(this.switchOnOff) {
 			log.info("Current time is: {}", LocalDateTime.now());
 			collectData();
 			this.count.incrementAndGet();
-//		}
+		}
 	}
 	
 	public void start() {

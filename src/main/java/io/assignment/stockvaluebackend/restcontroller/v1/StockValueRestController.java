@@ -21,8 +21,8 @@ public class StockValueRestController {
 	
 	@GetMapping(value = "/v1/start")
 	public String start() {
-//		service.start();
-		service.run();
+		service.start();
+//		service.run();
 		return "Collector started";
 	}
 	
