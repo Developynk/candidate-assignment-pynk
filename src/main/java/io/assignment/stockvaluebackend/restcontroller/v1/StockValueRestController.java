@@ -1,10 +1,16 @@
 package io.assignment.stockvaluebackend.restcontroller.v1;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.assignment.stockvaluebackend.service.StockValueService;
+
 @RestController
 public class StockValueRestController {
+	
+	@Autowired
+	private StockValueService service;
 	
 	@GetMapping(path = "/")
 	public String welcome() {
@@ -14,7 +20,7 @@ public class StockValueRestController {
 	
 	@GetMapping(value = "/v1/start")
 	public String start() {
-		
+		service.callStockValue();
 		return "Collecting";
 	}
 	
